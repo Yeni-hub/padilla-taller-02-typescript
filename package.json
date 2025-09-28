@@ -1,17 +1,13 @@
 {
   "name": "taller-02-typescript",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "ts-node src/main.ts",
-    "build": "tsc",
-    "preview": "vite preview"
+    "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
+    "@types/node": "^20.19.17",
     "ts-node": "^10.9.2",
-    "typescript": "~5.8.3",
-    "vite": "^7.1.7"
+    "typescript": "^5.9.2"
   }
 }
