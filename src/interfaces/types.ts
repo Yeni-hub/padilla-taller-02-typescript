@@ -1,5 +1,12 @@
 // src/interfaces/types.ts
 
+export interface UsuarioApi {
+  id: number;
+  name: string;
+  email: string;
+}
+
+
 // Interfaz básica para un usuario
 export interface Usuario {
   nombre: string;

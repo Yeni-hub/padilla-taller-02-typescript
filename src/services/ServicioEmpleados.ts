@@ -2,17 +2,18 @@
 import { ApiService } from "./ApiService";
 import { Desarrollador } from "../classes/Desarrollador";
 import { Gerente } from "../classes/Gerente";
-import { Departamento } from "../interfaces/types";
+import { Departamento, UsuarioApi } from "../interfaces/types";
 
 export class ServicioEmpleados {
   constructor(private apiService: ApiService) {}
 
   async listarEmpleados(): Promise<void> {
-    const usuarios = await this.apiService.obtenerUsuarios();
+    // Traer usuarios desde la API externa
+    const usuarios: UsuarioApi[] = await this.apiService.obtenerUsuarios();
 
-    const empleados = usuarios.map((usuario: any, index: number) => {
+    const empleados = usuarios.map((usuario, index) => {
       if (index % 2 === 0) {
-        // Los pares son desarrolladores
+        // Pares = Desarrolladores
         return new Desarrollador(
           usuario.id,
           usuario.name,
@@ -22,7 +23,7 @@ export class ServicioEmpleados {
           4000
         );
       } else {
-        // Los impares son gerentes
+        // Impares = Gerentes
         return new Gerente(
           usuario.id,
           usuario.name,
@@ -35,7 +36,7 @@ export class ServicioEmpleados {
       }
     });
 
-    console.log("=== LISTA DE EMPLEADOS ===");
+    console.log("=== LISTA DE EMPLEADOS DESDE API ===");
     empleados.forEach((empleado) => empleado.mostrarInformacion());
   }
 }
