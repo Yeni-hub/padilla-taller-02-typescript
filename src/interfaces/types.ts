@@ -1,32 +1,19 @@
 // src/interfaces/types.ts
 
+// Lo que devuelve la API
 export interface UsuarioApi {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  gender: string;
   email: string;
 }
 
-
-// Interfaz básica para un usuario
+// Lo que usa nuestra app
 export interface Usuario {
   nombre: string;
   edad: number;
   correo: string;
   genero: string;
-}
-
-// Interfaz de empleado que hereda de Usuario
-export interface Empleado extends Usuario {
-  id: number;
-  cargo: string;
-  departamento: string;
-  salario: number;
-}
-
-// Enumeración para los departamentos de la empresa
-export enum Departamento {
-  IT = "IT",
-  RRHH = "RRHH",
-  VENTAS = "VENTAS",
-  MERCADEO = "MERCADEO",
 }

@@ -1,19 +1,20 @@
-// src/classes/BaseEmpleado.ts
-import { Departamento } from "../interfaces/types";
+// BaseEmpleados.ts
+import { Usuario } from "../interfaces/types";
 
-// Clase abstracta que representa a un empleado genérico
-export abstract class BaseEmpleado {
-  constructor(
-    public id: number,
-    public nombre: string,
-    public edad: number,
-    public correo: string,
-    public genero: string,
-    public cargo: string,
-    public departamento: Departamento,
-    public salario: number
-  ) {}
+export class BaseEmpleados {
+  nombre: string;
+  edad: number;
+  genero: string;
+  salario: number;  // <-- agregamos salario
 
-  // Método abstracto: cada clase hija debe implementarlo
-  abstract mostrarInformacion(): void;
+  constructor(usuario: Usuario, salario: number = 0) {
+    this.nombre = usuario.nombre;
+    this.edad = usuario.edad;
+    this.genero = usuario.genero;
+    this.salario = salario; // asignamos
+  }
+
+  mostrarInfo() {
+    console.log(`Nombre: ${this.nombre}, Edad: ${this.edad}, Género: ${this.genero}, Salario: $${this.salario}`);
+  }
 }

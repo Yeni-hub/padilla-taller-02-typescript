@@ -1,42 +1,36 @@
 // src/services/ServicioEmpleados.ts
-import { ApiService } from "./ApiService";
-import { Desarrollador } from "../classes/Desarrollador";
-import { Gerente } from "../classes/Gerente";
-import { Departamento, UsuarioApi } from "../interfaces/types";
+
+import fetch from "node-fetch";
+import { UsuarioApi, Usuario } from "../interfaces/types";
 
 export class ServicioEmpleados {
-  constructor(private apiService: ApiService) {}
+  private apiUrl = "https://dummyjson.com/users";
 
-  async listarEmpleados(): Promise<void> {
-    // Traer usuarios desde la API externa
-    const usuarios: UsuarioApi[] = await this.apiService.obtenerUsuarios();
+  async listarEmpleados(): Promise<Usuario[]> {
+    try {
+      const respuesta = await fetch(this.apiUrl);
 
-    const empleados = usuarios.map((usuario, index) => {
-      if (index % 2 === 0) {
-        // Pares = Desarrolladores
-        return new Desarrollador(
-          usuario.id,
-          usuario.name,
-          30,
-          usuario.email,
-          "No especificado",
-          4000
-        );
-      } else {
-        // Impares = Gerentes
-        return new Gerente(
-          usuario.id,
-          usuario.name,
-          40,
-          usuario.email,
-          "No especificado",
-          Departamento.RRHH,
-          6000
-        );
+      if (!respuesta.ok) {
+        throw new Error(`Error HTTP: ${respuesta.status}`);
       }
-    });
 
-    console.log("=== LISTA DE EMPLEADOS DESDE API ===");
-    empleados.forEach((empleado) => empleado.mostrarInformacion());
+      // Forzamos el tipo de retorno de json() para que TypeScript no dé error
+      const data = (await respuesta.json()) as { users: UsuarioApi[] };
+      const { users } = data;
+
+      // Mapeo seguro a nuestro tipo Usuario
+      return Array.isArray(users)
+        ? users.map((u: UsuarioApi) => ({
+            nombre: `${u.firstName} ${u.lastName}`,
+            edad: u.age ?? 0,
+            correo: u.email || "",
+            genero: u.gender || "N/A",
+          }))
+        : [];
+
+    } catch (error) {
+      console.error("Error al listar empleados:", error);
+      return [];
+    }
   }
 }
