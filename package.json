@@ -2,7 +2,7 @@
   "name": "taller-02-typescript",
   "version": "0.0.0",
   "scripts": {
-    "dev": "ts-node src/main.ts",
+    "dev": "ts-node src/index.ts",
     "build": "tsc"
   },
   "devDependencies": {
