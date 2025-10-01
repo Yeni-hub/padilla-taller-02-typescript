@@ -1,4 +1,4 @@
-// src/index.ts
+// src/main.ts
 
 import { ServicioEmpleados } from "./services/ServicioEmpleados";
 
